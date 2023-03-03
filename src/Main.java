@@ -27,24 +27,31 @@ public class Main {
       System.out.println("Hello world!");
   */
   public static void readFromFile(Candidate obama, Candidate mcCain) throws IOException {
-    File fileInput = new File("res/input.txt");
-    BufferedReader fr = new BufferedReader(new FileReader(fileInput));
-    int quantity = Integer.parseInt(fr.readLine());
-    for (int i = 0; i < quantity; i++) {
-      String line = fr.readLine();
-      int sep = line.indexOf(" ");
-      String name = line.substring(0, sep);
-      int votes = Integer.parseInt(line.substring(sep + 1));
-      if (name.equals("McCain")) {
-        mcCain.setVotes(mcCain.getVotes() + votes);
-      } else if (name.equals("Obama")) {
-        obama.setVotes(obama.getVotes() + votes);
+    try {
+      File fileInput = new File("res/input.txt");
+      BufferedReader fr = new BufferedReader(new FileReader(fileInput));
+      int quantity = Integer.parseInt(fr.readLine());
+      for (int i = 0; i < quantity; i++) {
+        String line = fr.readLine();
+        int sep = line.indexOf(" ");
+        String name = line.substring(0, sep);
+        int votes = Integer.parseInt(line.substring(sep + 1));
+        if (name.equals("McCain")) {
+          mcCain.setVotes(mcCain.getVotes() + votes);
+        } else if (name.equals("Obama")) {
+          obama.setVotes(obama.getVotes() + votes);
+        }
       }
+      fr.close();
+    } catch (NumberFormatException e) {
+      System.out.println("Wrong number in file! " + e.getMessage());
+    } catch (FileNotFoundException e) {
+      System.err.println("File not found! " + e.getMessage());
     }
-    fr.close();
   }
 
   public static void writeToFile(Candidate obama, Candidate mcCain) throws IOException {
+
     File fileOutput = new File("res/out.txt");
     if (!fileOutput.exists()) {
       fileOutput.createNewFile();

@@ -1,3 +1,5 @@
+import java.io.*;
+
 public class Main {
   /*  Как известно, в США президент выбирается не прямым голосованием,
     а путем двухуровневого голосования.
@@ -24,7 +26,27 @@ public class Main {
     public static void main(String[] args) {
       System.out.println("Hello world!");
   */
-  public static void main(String[] args) {
+  public static void main(String[] args) throws IOException {
+    File fileInput = new File("res/input.txt");
+    BufferedReader fr = new BufferedReader(new FileReader(fileInput));
+    Candidate obama = Candidate.Obama;
+    Candidate mcCain = Candidate.McCain;
+
+    int quantity = Integer.parseInt(fr.readLine());
+    for (int i = 0; i < quantity; i++) {
+      String line = fr.readLine();
+      int sep = line.indexOf(" ");
+      String name = line.substring(0, sep);
+      int votes = Integer.parseInt(line.substring(sep+1));
+      if (name.equals("McCain")) {
+        mcCain.setVotes(mcCain.getVotes() + votes);
+      } else if (name.equals("Obama")) {
+        obama.setVotes(obama.getVotes() + votes);
+      }
+    }
+    System.out.println("McCain "+mcCain.votes);
+    System.out.println("Obama "+obama.votes);
+
 
 
   }

@@ -37,17 +37,22 @@ public class Main {
       String line = fr.readLine();
       int sep = line.indexOf(" ");
       String name = line.substring(0, sep);
-      int votes = Integer.parseInt(line.substring(sep+1));
+      int votes = Integer.parseInt(line.substring(sep + 1));
       if (name.equals("McCain")) {
         mcCain.setVotes(mcCain.getVotes() + votes);
       } else if (name.equals("Obama")) {
         obama.setVotes(obama.getVotes() + votes);
       }
     }
-    System.out.println("McCain "+mcCain.votes);
-    System.out.println("Obama "+obama.votes);
 
-
+    File fileOutput = new File("res/out.txt");
+    if (!fileOutput.exists()) {
+      fileOutput.createNewFile();
+    }
+    FileWriter fw = new FileWriter(fileOutput);
+    fw.write("McCain " + mcCain.votes + "\n");
+    fw.write("Obama " + obama.votes + "\n");
+    fw.close();
 
   }
 }

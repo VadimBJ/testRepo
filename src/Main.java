@@ -26,12 +26,9 @@ public class Main {
     public static void main(String[] args) {
       System.out.println("Hello world!");
   */
-  public static void main(String[] args) throws IOException {
+  public static void readFromFile(Candidate obama, Candidate mcCain) throws IOException {
     File fileInput = new File("res/input.txt");
     BufferedReader fr = new BufferedReader(new FileReader(fileInput));
-    Candidate obama = Candidate.Obama;
-    Candidate mcCain = Candidate.McCain;
-
     int quantity = Integer.parseInt(fr.readLine());
     for (int i = 0; i < quantity; i++) {
       String line = fr.readLine();
@@ -44,7 +41,10 @@ public class Main {
         obama.setVotes(obama.getVotes() + votes);
       }
     }
+    fr.close();
+  }
 
+  public static void writeToFile(Candidate obama, Candidate mcCain) throws IOException {
     File fileOutput = new File("res/out.txt");
     if (!fileOutput.exists()) {
       fileOutput.createNewFile();
@@ -53,6 +53,12 @@ public class Main {
     fw.write("McCain " + mcCain.votes + "\n");
     fw.write("Obama " + obama.votes + "\n");
     fw.close();
+  }
 
+  public static void main(String[] args) throws IOException {
+    Candidate obama = Candidate.Obama;
+    Candidate mcCain = Candidate.McCain;
+    readFromFile(obama, mcCain);
+    writeToFile(obama, mcCain);
   }
 }
